@@ -7,8 +7,7 @@ st.title("📚 AI Study Notes & PDF Summarizer")
 st.write("Apne lambe PDF notes upload karein ya text paste karein aur turant short summary paayein!")
 
 # Apni API Key yahan paste karein
-API_KEY = "API_KEY = st.secrets["GEMINI_API_KEY"]
-"
+API_KEY = "API_KEY = st.secrets["GEMINI_API_KEY"]"
 client = genai.Client(api_key=API_KEY)
 
 option = st.radio("Notes kaise dena chahte hain?", ("PDF Upload Karein", "Text Paste Karein"))
