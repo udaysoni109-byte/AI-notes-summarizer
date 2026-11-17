@@ -6,8 +6,8 @@ st.set_page_config(page_title="AI Study Notes Summarizer", page_icon="📚")
 st.title("📚 AI Study Notes & PDF Summarizer")
 st.write("Apne lambe PDF notes upload karein ya text paste karein aur turant short summary paayein!")
 
-# Apni API Key yahan paste karein
-API_KEY = st.secrets["GEMINI_API_KEY"]
+# Streamlit Secrets se API Key lena
+API_KEY = st.secrets["GEMINI_API_KEY"].strip()
 client = genai.Client(api_key=API_KEY)
 
 option = st.radio("Notes kaise dena chahte hain?", ("PDF Upload Karein", "Text Paste Karein"))
@@ -30,10 +30,13 @@ if st.button("✨ Summary Banayein"):
         st.warning("Pehle koi PDF upload karein ya text likhein!")
     else:
         with st.spinner("AI aapke notes padh kar summary bana raha hai..."):
-            prompt = f"Summarize the following study notes into {summary_type} in easy-to-understand language for a student:\n\n{extracted_text}"
-            response = client.models.generate_content(
-                model="gemini-2.5-flash",
-                contents=prompt
-            )
-            st.subheader("📝 Aapki Study Summary:")
-            st.write(response.text)
+            try:
+                prompt = f"Summarize the following study notes into {summary_type} in easy-to-understand language for a student:\n\n{extracted_text}"
+                response = client.models.generate_content(
+                    model="gemini-2.0-flash",
+                    contents=prompt
+                )
+                st.subheader("📝 Aapki Study Summary:")
+                st.write(response.text)
+            except Exception as e:
+                st.error(f"Error details: {e}")
